@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:troupe/Screens/pages/CollectionFeed.dart';
 import 'package:troupe/Screens/pages/CreatePage.dart';
 import 'package:troupe/Screens/pages/LinkFeed.dart';
 import 'package:troupe/Screens/pages/Profile.dart';
@@ -19,10 +20,7 @@ class _HomePageState extends State<HomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   List<Widget> _widgetOptions = <Widget>[
     LinkFeed(),
-    Text(
-      'Create',
-      style: optionStyle,
-    ),
+    CollectionFeed(),
     CreatePage(),
     Text(
       'Likes',

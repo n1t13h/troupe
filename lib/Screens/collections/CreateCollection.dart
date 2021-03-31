@@ -197,6 +197,7 @@ class _CreateCollectionState extends State<CreateCollection> {
                         "name": name,
                         "image": image,
                         "uid": _auth.currentUser.uid,
+                        "isfeatured": false,
                         "searchList": setSearchParam(name),
                       });
                       Alert(message: "${name} created successfully!").show();

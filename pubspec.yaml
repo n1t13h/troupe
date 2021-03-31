@@ -19,9 +19,14 @@ dependencies:
   firebase_auth: ^1.0.1
   google_nav_bar: ^5.0.3
   flutter_icons: ^1.1.0
+  rating_dialog: ^2.0.0
   alert: ^1.0.1
   any_link_preview: ^1.0.7
+  path_provider: ^2.0.1
+  ndialog: ^4.0.1
+  screenshot: ^0.3.0
   google_sign_in: ^4.5.6
+  share: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

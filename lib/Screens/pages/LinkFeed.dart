@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:troupe/Screens/pages/CategoryLinks.dart';
-import 'package:troupe/Screens/profile/ViewProfile.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:troupe/Values/FadeTransition.dart';
-import 'package:troupe/Values/methods.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:ndialog/ndialog.dart';
+import 'package:share/share.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -100,18 +100,120 @@ class _LinkFeedState extends State<LinkFeed> {
                       physics: ClampingScrollPhysics(),
                       itemCount: querySnapshot.docs.length,
                       itemBuilder: (context, index) {
-                        String username =
-                            getUserName(querySnapshot.docs[index]['uid']);
-                        print(username);
-
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Card(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                            "${querySnapshot.docs[index]['title']} ",
+                                            style: GoogleFonts.poppins(
+                                                color: blueblack,
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ),
+                                    IconButton(
+                                        icon: Icon(Icons.more_vert_sharp),
+                                        onPressed: () async {
+                                          await NDialog(
+                                            dialogStyle: DialogStyle(
+                                              titleDivider: true,
+                                            ),
+                                            title: Center(
+                                              child: Text(
+                                                "Options",
+                                                style: GoogleFonts.poppins(),
+                                              ),
+                                            ),
+                                            content: Container(
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  children: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).push(FadeRoute(
+                                                            page: CategoryLink(
+                                                                querySnapshot
+                                                                            .docs[
+                                                                        index][
+                                                                    'collectionid'],
+                                                                querySnapshot
+                                                                            .docs[
+                                                                        index]
+                                                                    ['uid'])));
+                                                      },
+                                                      child: Text(
+                                                        "View Collection",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                color:
+                                                                    blueblack,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                      ),
+                                                    ),
+                                                    Divider(),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context).push(FadeRoute(
+                                                            page: CategoryLink(
+                                                                querySnapshot
+                                                                            .docs[
+                                                                        index][
+                                                                    'collectionid'],
+                                                                querySnapshot
+                                                                            .docs[
+                                                                        index]
+                                                                    ['uid'])));
+                                                      },
+                                                      child: Text(
+                                                        "View Profile",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                color:
+                                                                    blueblack,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                      ),
+                                                    ),
+                                                    Divider(),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Share.share(
+                                                            'Check Out This Link!\n${querySnapshot.docs[index]["link"]}\nShared Via *@Troupee*',
+                                                            subject:
+                                                                'Check This Out!');
+                                                      },
+                                                      child: Text(
+                                                        "Share",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                color:
+                                                                    blueblack,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ).show(context);
+                                        }),
+                                  ],
+                                ),
                                 GestureDetector(
                                   onTap: () {
                                     _launchInWebViewOrVC(querySnapshot
@@ -119,60 +221,29 @@ class _LinkFeedState extends State<LinkFeed> {
                                         .toString());
                                   },
                                   child: AnyLinkPreview(
+                                      placeholderWidget: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Card(
+                                          child: Container(
+                                              color: blueblack,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.9,
+                                              height: 90.0,
+                                              child: Center(
+                                                  child: Text(
+                                                "Unable to Load Preview!Click To Open Link",
+                                                style: GoogleFonts.poppins(
+                                                  color: orange,
+                                                ),
+                                              ))),
+                                        ),
+                                      ),
                                       showMultimedia: true,
                                       displayDirection:
-                                          UIDirection.UIDirectionHorizontal,
+                                          UIDirection.UIDirectionVertical,
                                       link: querySnapshot.docs[index]['link']),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(0.0),
-                                        child: Text(
-                                            "${querySnapshot.docs[index]['title']} ",
-                                            style: GoogleFonts.poppins(
-                                                color: orange,
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(FadeRoute(
-                                              page: CategoryLink(
-                                                  querySnapshot.docs[index]
-                                                      ['collectionid'],
-                                                  querySnapshot.docs[index]
-                                                      ['uid'])));
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Text(
-                                              "in ${querySnapshot.docs[index]['collectionname']}",
-                                              style: GoogleFonts.poppins(
-                                                  color: orange,
-                                                  fontSize: 12.0,
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(FadeRoute(
-                                              page: ViewProfile(querySnapshot
-                                                  .docs[index]['uid'])));
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: Text(" @ $username",
-                                              style: GoogleFonts.poppins(
-                                                  color: blueblack,
-                                                  fontSize: 12.0,
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                 ),
                               ],
                             ),
