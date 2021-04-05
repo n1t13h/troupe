@@ -1,17 +1,20 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+// ignore: must_be_immutable
 class CategoryLink extends StatefulWidget {
-  String cateid;
+  String id;
   String uid;
-  CategoryLink(this.cateid, this.uid);
+  CategoryLink(this.id, this.uid);
   @override
   _CategoryLinkState createState() => _CategoryLinkState();
 }
@@ -40,6 +43,7 @@ class _CategoryLinkState extends State<CategoryLink> {
   Query query = FirebaseFirestore.instance.collection('links');
   Future<void> _launchInWebViewOrVC(String url) async {
     print("In the function");
+    context.showToast(msg: "Launching ${url}");
     await launch(url.toString());
     // print(canLaunch(url));
     // if (await canLaunch(url)) {
@@ -61,8 +65,7 @@ class _CategoryLinkState extends State<CategoryLink> {
       ),
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
-          stream:
-              query.where('collectionid', isEqualTo: widget.cateid).snapshots(),
+          stream: query.where('collectionid', isEqualTo: widget.id).snapshots(),
           builder: (context, stream) {
             if (stream.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -81,39 +84,46 @@ class _CategoryLinkState extends State<CategoryLink> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      color: blueblack,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(querySnapshot.docs[index]['title'],
-                                style: GoogleFonts.poppins(
-                                    color: orange,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: AnyLinkPreview(
-                              titleStyle: GoogleFonts.poppins(color: orange),
-                              link: querySnapshot.docs[index]['link'],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                "in ${querySnapshot.docs[index]['collectionname']} @ $username",
-                                style: GoogleFonts.poppins(
-                                    color: orange,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ],
-                      ),
+                    child: GestureDetector(
+                      onTap: () {
+                        _launchInWebViewOrVC(
+                            querySnapshot.docs[index]['link'].toString());
+                      },
+                      child: kIsWeb
+                          ? Card(
+                              child: Container(
+                              height: 100.0,
+                              color: blueblack,
+                              child: Center(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(querySnapshot.docs[index]['link'],
+                                    style: GoogleFonts.poppins(
+                                        color: orange,
+                                        fontWeight: FontWeight.w500)),
+                              )),
+                            ))
+                          : AnyLinkPreview(
+                              placeholderWidget: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  child: Container(
+                                      color: blueblack,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      height: 90.0,
+                                      child: Center(
+                                          child: Text(
+                                        "Unable to Load Preview!Click To Open Link",
+                                        style: GoogleFonts.poppins(
+                                          color: orange,
+                                        ),
+                                      ))),
+                                ),
+                              ),
+                              showMultimedia: true,
+                              displayDirection: UIDirection.UIDirectionVertical,
+                              link: querySnapshot.docs[index]['link']),
                     ),
                   );
                 });

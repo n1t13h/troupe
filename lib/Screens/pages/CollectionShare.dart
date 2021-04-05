@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
-import 'package:share/share.dart';
+
 import 'package:troupe/Screens/profile/ProfileHeader.dart';
 import 'package:troupe/Values/AppColors.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CollectionShare extends StatefulWidget {
   String name;

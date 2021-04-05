@@ -11,11 +11,9 @@ import 'package:troupe/Screens/pages/CategoryLinks.dart';
 import 'package:troupe/Screens/pages/CollectionShare.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:troupe/Values/FadeTransition.dart';
-import 'package:share/share.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
-import 'dart:async';
+
+import 'package:share_plus/share_plus.dart';
+import 'package:troupe/Values/Routes.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -108,9 +106,13 @@ class _CollectionFeedState extends State<CollectionFeed> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(FadeRoute(
-                                page: CategoryLink(querySnapshot.docs[index].id,
-                                    querySnapshot.docs[index]['uid'])));
+                            Navigator.of(context).pushNamed(
+                              MyRoutes.collectionRoute,
+                              arguments: {
+                                "uid": querySnapshot.docs[index]['uid'],
+                                "cateid": querySnapshot.docs[index].id,
+                              },
+                            );
                           },
                           onLongPress: () async {
                             await NDialog(

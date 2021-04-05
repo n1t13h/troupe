@@ -7,6 +7,8 @@ import 'package:troupe/Screens/auth/Authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:troupe/Values/AppColors.dart';
+import 'package:troupe/Values/Routes.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -30,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Material(
-        child: SafeArea(
+        child: SingleChildScrollView(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -120,8 +122,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Alert(message: e.toString()).show();
                       }
                     });
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => HomePage()));
+                    context.vxNav.clearAndPush(Uri.parse(MyRoutes.homeRoute));
                   } else {
                     Alert(
                             message: "Something Went  Wrong",

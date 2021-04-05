@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:troupe/Screens/HomePage.dart';
 import 'dart:async';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'package:troupe/Screens/WelcomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:troupe/Values/Routes.dart';
 // import 'package:flutterfitness/screens/admin/Dashboard.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -31,11 +33,9 @@ class SplashScreenState extends State<SplashScreen> {
   onDoneLoading() async {
     print(_auth.currentUser);
     if (_auth.currentUser != null) {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+      context.vxNav.clearAndPush(Uri.parse(MyRoutes.homeRoute));
     } else {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => WelcomeScreen()));
+      context.vxNav.clearAndPush(Uri.parse(MyRoutes.welcomRoute));
     }
   }
 

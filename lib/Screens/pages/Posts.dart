@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:troupe/Screens/pages/CategoryLinks.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:troupe/Values/FadeTransition.dart';
+import 'package:troupe/Values/Routes.dart';
 import 'package:troupe/Values/methods.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -69,9 +71,12 @@ class _PostsState extends State<Posts> {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(FadeRoute(
-                        page: CategoryLink(
-                            querySnapshot.docs[index].id, widget.email)));
+                    context.vxNav.push(Uri(
+                        path: MyRoutes.collectionRoute,
+                        queryParameters: {
+                          'id': querySnapshot.docs[index].id,
+                          'uid': widget.email
+                        }));
                   },
                   child: Card(
                     elevation: 3.0,
