@@ -10,6 +10,7 @@ import 'package:troupe/Screens/pages/Profile.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ndialog/ndialog.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatefulWidget {
   Uri uri;
@@ -43,6 +44,12 @@ class _HomePageState extends State<HomePage> {
               color: blueblack, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(icon: Icon(Icons.keyboard_arrow_left_sharp), onPressed: (){
+            final queryParameter = widget.uri.queryParametersAll.entries.toList();
+            VxToast.show(context, msg: queryParameter.toString(),showTime: 10000);
+          })
+        ],
       ),
       body: Container(
         child: _widgetOptions.elementAt(_selectedIndex),
