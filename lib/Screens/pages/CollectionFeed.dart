@@ -7,12 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ndialog/ndialog.dart';
-import 'package:troupe/Screens/pages/CategoryLinks.dart';
 import 'package:troupe/Screens/pages/CollectionShare.dart';
 import 'package:troupe/Values/AppColors.dart';
-import 'package:troupe/Values/FadeTransition.dart';
 
-import 'package:share_plus/share_plus.dart';
 import 'package:troupe/Values/Routes.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
