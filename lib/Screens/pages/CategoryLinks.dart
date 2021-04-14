@@ -13,33 +13,13 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 // ignore: must_be_immutable
 class CategoryLink extends StatefulWidget {
   String id;
-  String uid;
-  CategoryLink(this.id, this.uid);
+  CategoryLink(this.id);
   @override
   _CategoryLinkState createState() => _CategoryLinkState();
 }
 
 class _CategoryLinkState extends State<CategoryLink> {
-  @override
-  void initState() {
-    super.initState();
-    loaddata();
-  }
-
-  String username;
-  loaddata() {
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(widget.uid)
-        .get()
-        .then((value) {
-      var data = value.data();
-      setState(() {
-        username = data['username'];
-      });
-    });
-  }
-
+  
   Query query = FirebaseFirestore.instance.collection('links');
   Future<void> _launchInWebViewOrVC(String url) async {
     print("In the function");

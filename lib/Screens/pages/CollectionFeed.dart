@@ -109,8 +109,7 @@ class _CollectionFeedState extends State<CollectionFeed> {
                             Navigator.of(context).pushNamed(
                               MyRoutes.collectionRoute,
                               arguments: {
-                                "uid": querySnapshot.docs[index]['uid'],
-                                "cateid": querySnapshot.docs[index].id,
+                                "id": querySnapshot.docs[index].id,
                               },
                             );
                           },

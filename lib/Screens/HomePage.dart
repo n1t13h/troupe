@@ -12,6 +12,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ndialog/ndialog.dart';
 
 class HomePage extends StatefulWidget {
+  Uri uri;
+  HomePage(this.uri);
   @override
   _HomePageState createState() => _HomePageState();
 }

@@ -217,12 +217,14 @@ class _MyAppState extends State<MyApp> {
               routeInformationParser: VxInformationParser(),
               routerDelegate: VxNavigator(routes: {
                 "/": (_, __) => MaterialPage(child: SplashScreen()),
-                "/home": (_, __) => MaterialPage(child: HomePage()),
                 "/welcome": (_, __) => MaterialPage(child: WelcomeScreen()),
                 "/collection": (uri, params) {
                   var id = uri.queryParameters['id'];
-                  var uid = uri.queryParameters['uid'];
-                  return MaterialPage(child: CategoryLink(id, uid));
+                  return MaterialPage(child: CategoryLink(id));
+                },
+                "/home": (uri, params) {
+                  var id = _latestUri;
+                  return MaterialPage(child: HomePage(id));
                 },
               }),
             ));
