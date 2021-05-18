@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class FadeRoute extends PageRouteBuilder {
   final Widget page;
   FadeRoute({this.page})
@@ -16,8 +17,8 @@ class FadeRoute extends PageRouteBuilder {
             Widget child,
           ) =>
               FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
+            opacity: animation,
+            child: child,
+          ),
         );
 }
