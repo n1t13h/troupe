@@ -1,8 +1,4 @@
-import 'dart:typed_data';
-
-import 'package:alert/alert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,8 +8,6 @@ import 'package:troupe/Values/AppColors.dart';
 
 import 'package:troupe/Values/Routes.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CollectionFeed extends StatefulWidget {
   @override

@@ -2,7 +2,6 @@ import 'package:alert/alert.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:troupe/Screens/HomePage.dart';
 import 'package:troupe/Screens/auth/Authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -19,7 +18,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   setSearchParam(String caseNumber) {
-    List<String> caseSearchList = List();
+    List<String> caseSearchList = [];
     String temp = "";
     for (int i = 0; i < caseNumber.length; i++) {
       temp = temp + caseNumber[i];
@@ -60,8 +59,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FlatButton(
-                color: Colors.transparent,
+              child: TextButton(
                 child: Row(
                   children: [
                     Padding(
@@ -130,10 +128,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         .show();
                   }
                 },
-                padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20.0),
-                    side: BorderSide(color: blueblack, width: 3.0)),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.fromLTRB(50.0, 15.0, 50.0, 15.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(20.0),
+                      side: BorderSide(color: blueblack, width: 3.0)),
+                ),
               ),
             ),
           ],

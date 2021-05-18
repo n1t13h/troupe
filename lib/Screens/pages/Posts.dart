@@ -1,19 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:troupe/Screens/pages/CategoryLinks.dart';
 import 'package:troupe/Values/AppColors.dart';
-import 'package:troupe/Values/FadeTransition.dart';
 import 'package:troupe/Values/Routes.dart';
-import 'package:troupe/Values/methods.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-final FirebaseAuth _auth = FirebaseAuth.instance;
-
 class Posts extends StatefulWidget {
-  String email;
+  final String email;
   Posts(this.email);
   @override
   _PostsState createState() => _PostsState();

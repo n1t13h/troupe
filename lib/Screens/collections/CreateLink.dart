@@ -243,7 +243,7 @@ class _CreateLinkState extends State<CreateLink> {
                   "created_at": DateTime.now(),
                   "likedby": []
                 });
-                Alert(message: "${name} created successfully!").show();
+                Alert(message: "$name created successfully!").show();
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(primary: blueblack),

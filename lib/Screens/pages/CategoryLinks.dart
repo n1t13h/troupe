@@ -1,7 +1,6 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,7 +22,7 @@ class _CategoryLinkState extends State<CategoryLink> {
   Query query = FirebaseFirestore.instance.collection('links');
   Future<void> _launchInWebViewOrVC(String url) async {
     print("In the function");
-    context.showToast(msg: "Launching ${url}");
+    context.showToast(msg: "Launching $url");
     await launch(url.toString());
     // print(canLaunch(url));
     // if (await canLaunch(url)) {
