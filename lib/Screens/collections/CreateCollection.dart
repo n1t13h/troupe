@@ -200,7 +200,7 @@ class _CreateCollectionState extends State<CreateCollection> {
                         "isfeatured": false,
                         "searchList": setSearchParam(name),
                       });
-                      Alert(message: "${name} created successfully!").show();
+                      Alert(message: "$name created successfully!").show();
                       Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(primary: blueblack),

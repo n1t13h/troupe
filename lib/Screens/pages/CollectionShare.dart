@@ -5,10 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
-import 'package:troupe/Screens/profile/ProfileHeader.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:share_plus/share_plus.dart';
 
+// ignore: must_be_immutable
 class CollectionShare extends StatefulWidget {
   String name;
   String id;

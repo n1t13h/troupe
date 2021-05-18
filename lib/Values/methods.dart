@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 String getUserName(String uid) {
   String username;
@@ -17,7 +16,7 @@ String getUserName(String uid) {
 }
 
 setSearchParam(String caseNumber) {
-  List<String> caseSearchList = List();
+  List<String> caseSearchList = [];
   String temp = "";
   for (int i = 0; i < caseNumber.length; i++) {
     temp = temp + caseNumber[i].toLowerCase();

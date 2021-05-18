@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:troupe/Screens/HomePage.dart';
@@ -10,7 +9,6 @@ import 'package:troupe/Screens/WelcomeScreen.dart';
 import 'package:troupe/Screens/pages/CategoryLinks.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:troupe/Values/Routes.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:uni_links/uni_links.dart';
@@ -31,6 +29,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // ignore: unused_field
   String _latestLink = 'Unknown';
   Uri _latestUri;
 
@@ -71,9 +70,9 @@ class _MyAppState extends State<MyApp> {
     ];
   }
 
+  // ignore: unused_field
   final TextStyle _cmdStyle = const TextStyle(
       fontFamily: 'Courier', fontSize: 12.0, fontWeight: FontWeight.w700);
-  final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   initState() {

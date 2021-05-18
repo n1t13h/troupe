@@ -1,13 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:troupe/Screens/pages/Posts.dart';
-import 'package:troupe/Screens/profile/Settings.dart';
-import 'package:troupe/Values/FadeTransition.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 // ignore: must_be_immutable
 class ViewProfile extends StatefulWidget {
