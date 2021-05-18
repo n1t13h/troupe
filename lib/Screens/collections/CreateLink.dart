@@ -233,13 +233,15 @@ class _CreateLinkState extends State<CreateLink> {
           ElevatedButton(
               onPressed: () {
                 FirebaseFirestore.instance.collection("links").add({
-                  "link": link,
+                  "link": link.contains("https://") ? link : "https://" + link,
                   "title": name,
                   "uid": _auth.currentUser.uid,
                   "collectionname":
                       collectionid.replaceFirst(RegExp(r"\.[^]*"), ""),
                   "collectionid": collectionid.split('.').last,
                   "searchList": setSearchParam(name),
+                  "created_at": DateTime.now(),
+                  "likedby": []
                 });
                 Alert(message: "${name} created successfully!").show();
                 Navigator.of(context).pop();

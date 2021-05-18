@@ -1,19 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:troupe/Screens/collections/CreateLink.dart';
 import 'package:troupe/Screens/pages/CollectionFeed.dart';
 import 'package:troupe/Screens/pages/CreatePage.dart';
 import 'package:troupe/Screens/pages/LinkFeed.dart';
 import 'package:troupe/Screens/pages/Profile.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:troupe/Values/AppColors.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:ndialog/ndialog.dart';
+import 'package:troupe/Values/Routes.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatefulWidget {
-  Uri uri;
+  final Uri uri;
   HomePage(this.uri);
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,12 +27,32 @@ class _HomePageState extends State<HomePage> {
     LinkFeed(),
     CollectionFeed(),
     CreatePage(),
-    Text(
-      'Likes',
-      style: optionStyle,
-    ),
     ProfilePage()
   ];
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+    // VxToast.show(context, msg: queryParameter.toString(), showTime: 10000);
+  }
+
+  Future<Timer> loadData() async {
+    return new Timer(Duration(seconds: 1), onDoneLoading);
+  }
+
+  void onDoneLoading() {
+    final queryParameter = widget.uri.queryParametersAll.entries.toList();
+    if (queryParameter.isNotEmpty) {
+      if (queryParameter[0].key == "category") {
+        VxToast.show(context,
+            msg: "Redirecting you to a collection", showTime: 2000);
+        context.vxNav
+            .push(Uri(path: MyRoutes.collectionRoute, queryParameters: {
+          'id': queryParameter[0].value,
+        }));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +64,6 @@ class _HomePageState extends State<HomePage> {
               color: blueblack, fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(icon: Icon(Icons.keyboard_arrow_left_sharp), onPressed: (){
-            final queryParameter = widget.uri.queryParametersAll.entries.toList();
-            VxToast.show(context, msg: queryParameter.toString(),showTime: 10000);
-          })
-        ],
       ),
       body: Container(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -82,10 +96,6 @@ class _HomePageState extends State<HomePage> {
                   GButton(
                     icon: Icons.add,
                     text: 'Create',
-                  ),
-                  GButton(
-                    icon: SimpleLineIcons.fire,
-                    text: 'Likes',
                   ),
                   GButton(
                     icon: SimpleLineIcons.user,

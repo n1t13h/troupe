@@ -11,9 +11,10 @@ import 'package:share_plus/share_plus.dart';
 
 class CollectionShare extends StatefulWidget {
   String name;
+  String id;
   String uid;
   String image;
-  CollectionShare(this.name, this.image, this.uid);
+  CollectionShare(this.name, this.image, this.uid, this.id);
   @override
   _CollectionShareState createState() => _CollectionShareState();
 }
@@ -90,8 +91,8 @@ class _CollectionShareState extends State<CollectionShare> {
                           Center(
                               child: Text(
                             username,
-                            style: GoogleFonts.kalam(
-                                fontSize: 40.0,
+                            style: GoogleFonts.poppins(
+                                fontSize: 25.0,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900),
                           )),
@@ -127,7 +128,8 @@ class _CollectionShareState extends State<CollectionShare> {
                     Alert(message: "Screenshot saved").show();
                     print(path + "/" + fileName);
                     Share.shareFiles([path + "/" + fileName],
-                        text: 'CheckOut This Collection on *Troupee*');
+                        text:
+                            'CheckOut This Collection on *Troupee* at https://troupe.nitishpatel.live/?category=${widget.id}');
                   },
                   child: Text("Share Collection",
                       style: GoogleFonts.poppins(

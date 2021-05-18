@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:ndialog/ndialog.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:velocity_x/velocity_x.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -85,7 +86,7 @@ class _LinkFeedState extends State<LinkFeed> {
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: searchterm == null
-                    ? query.snapshots()
+                    ? query.orderBy("created_at", descending: true).snapshots()
                     : query
                         .where('searchList', arrayContains: searchterm)
                         .snapshots(),
@@ -146,52 +147,18 @@ class _LinkFeedState extends State<LinkFeed> {
                                                     children: [
                                                       TextButton(
                                                         onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pushNamed(
-                                                            MyRoutes
-                                                                .collectionRoute,
-                                                            arguments: {
-                                                              "uid": querySnapshot
-                                                                      .docs[
-                                                                  index]['uid'],
-                                                              "cateid": querySnapshot
-                                                                          .docs[
-                                                                      index][
-                                                                  'collectionid'],
-                                                            },
-                                                          );
+                                                          context.vxNav.push(Uri(
+                                                              path: MyRoutes
+                                                                  .collectionRoute,
+                                                              queryParameters: {
+                                                                'id': querySnapshot
+                                                                            .docs[
+                                                                        index][
+                                                                    'collectionid'],
+                                                              }));
                                                         },
                                                         child: Text(
                                                           "View Collection",
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  color:
-                                                                      blueblack,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                        ),
-                                                      ),
-                                                      Divider(),
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pushNamed(
-                                                            MyRoutes
-                                                                .collectionRoute,
-                                                            arguments: {
-                                                              "uid": querySnapshot
-                                                                      .docs[
-                                                                  index]['uid'],
-                                                              "cateid": querySnapshot
-                                                                          .docs[
-                                                                      index][
-                                                                  'collectionid'],
-                                                            },
-                                                          );
-                                                        },
-                                                        child: Text(
-                                                          "View Profile",
                                                           style: GoogleFonts
                                                               .poppins(
                                                                   color:
@@ -267,7 +234,9 @@ class _LinkFeedState extends State<LinkFeed> {
                                                     height: 90.0,
                                                     child: Center(
                                                         child: Text(
-                                                      "Unable to Load Preview!Click To Open Link",
+                                                      "Unable to Load Preview!Click To Open \n${querySnapshot.docs[index]['link']}",
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       style:
                                                           GoogleFonts.poppins(
                                                         color: orange,
@@ -281,6 +250,49 @@ class _LinkFeedState extends State<LinkFeed> {
                                             link: querySnapshot.docs[index]
                                                 ['link']),
                                   ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                          icon: Icon(
+                                            querySnapshot.docs[index]['likedby']
+                                                    .contains(
+                                                        _auth.currentUser.uid)
+                                                ? AntDesign.heart
+                                                : AntDesign.hearto,
+                                            color: querySnapshot.docs[index]
+                                                        ['likedby']
+                                                    .contains(
+                                                        _auth.currentUser.uid)
+                                                ? Colors.red
+                                                : Colors.black,
+                                          ),
+                                          onPressed: () {
+                                            List list = querySnapshot
+                                                .docs[index]['likedby'];
+                                            if (list.contains(
+                                                _auth.currentUser.uid)) {
+                                              list.remove(
+                                                  _auth.currentUser.uid);
+                                            } else {
+                                              list.add(_auth.currentUser.uid);
+                                            }
+                                            FirebaseFirestore.instance
+                                                .collection("links")
+                                                .doc(querySnapshot
+                                                    .docs[index].id)
+                                                .update({"likedby": list});
+                                          }),
+                                      Text(
+                                        querySnapshot.docs[index]['likedby']
+                                                    .length ==
+                                                0
+                                            ? ""
+                                            : "${querySnapshot.docs[index]['likedby'].length}",
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  )
                                 ],
                               ),
                             ),

@@ -11,6 +11,7 @@ import 'package:troupe/Screens/pages/CollectionShare.dart';
 import 'package:troupe/Values/AppColors.dart';
 
 import 'package:troupe/Values/Routes.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -73,10 +74,25 @@ class _CollectionFeedState extends State<CollectionFeed> {
                     ],
                   )
                 : Container(),
+            issearch
+                ? Center(
+                    child: Text(
+                      "Search For Collections",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500, fontSize: 20.0),
+                    ),
+                  )
+                : Center(
+                    child: Text(
+                      "Explore Featured Collections",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500, fontSize: 20.0),
+                    ),
+                  ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: searchterm == null
-                    ? query.snapshots()
+                    ? query.where("isfeatured", isEqualTo: true).snapshots()
                     : query
                         .where('searchList',
                             arrayContains: searchterm.toLowerCase())
@@ -103,12 +119,12 @@ class _CollectionFeedState extends State<CollectionFeed> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(
-                              MyRoutes.collectionRoute,
-                              arguments: {
-                                "id": querySnapshot.docs[index].id,
-                              },
-                            );
+                            print(querySnapshot.docs[index].id);
+                            context.vxNav.push(Uri(
+                                path: MyRoutes.collectionRoute,
+                                queryParameters: {
+                                  'id': querySnapshot.docs[index].id,
+                                }));
                           },
                           onLongPress: () async {
                             await NDialog(
@@ -125,7 +141,8 @@ class _CollectionFeedState extends State<CollectionFeed> {
                                 child: CollectionShare(
                                     querySnapshot.docs[index]['name'],
                                     querySnapshot.docs[index]['image'],
-                                    querySnapshot.docs[index]['uid']),
+                                    querySnapshot.docs[index]['uid'],
+                                    querySnapshot.docs[index].id),
                               ),
                             ).show(context);
                           },
@@ -153,8 +170,8 @@ class _CollectionFeedState extends State<CollectionFeed> {
                                   Center(
                                       child: Text(
                                     querySnapshot.docs[index]['name'],
-                                    style: GoogleFonts.questrial(
-                                        fontSize: 35.0,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 20.0,
                                         color: Colors.white,
                                         fontWeight: FontWeight.w900),
                                   )),

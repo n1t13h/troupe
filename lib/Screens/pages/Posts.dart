@@ -83,7 +83,7 @@ class _PostsState extends State<Posts> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                     child: Container(
-                      height: 300.0,
+                      height: 400.0,
                       width: 300.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
@@ -98,32 +98,32 @@ class _PostsState extends State<Posts> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Center(
-                              child: Text(
-                            querySnapshot.docs[index]['name'],
-                            style: GoogleFonts.questrial(
-                                fontSize: 35.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900),
-                          )),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
-                              "by",
+                              querySnapshot.docs[index]['name'],
                               style: GoogleFonts.questrial(
-                                  fontSize: 15.0,
+                                  fontSize: 25.0,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.w900),
                             )),
                           ),
+                          Center(
+                              child: Text(
+                            "by",
+                            style: GoogleFonts.questrial(
+                                fontSize: 14.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                                 child: Text(
                               "$username",
                               style: GoogleFonts.homemadeApple(
-                                  fontSize: 25.0,
+                                  fontSize: 20.0,
                                   color: orange.computeLuminance() > 0.5
                                       ? Colors.black
                                       : Colors.white,
